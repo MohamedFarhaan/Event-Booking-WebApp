@@ -21,7 +21,7 @@
             }
         //echo 'INSERT INTO event_dict VALUES("'.$_POST["event_name"].'","'.$_SESSION["username"].'","'.$Seats.'","'.$Timing.'",'.$_POST["duration"].',"'.$_POST["category"].'",0)';
         $query = mysqli_query($con,'INSERT INTO event_dict VALUES("'.$_POST["event_name"].'","'.$_SESSION["username"].'",'.$_POST["totalSeats"].',"'.$Seats.'","'.$Timing.'",'.$_POST["duration"].',"'.$_POST["category"].'",0)');  
-        $query = mysqli_query($con,'CREATE TABLE '.$_POST["event_name"].'(username TEXT,seatNumbers TEXT,contactMail TEXT, phoneNumber INT)');
+        $query = mysqli_query($con,'CREATE TABLE '.$_POST["event_name"].'(username TEXT,seatNumbers TEXT,contactMail TEXT, phoneNumber BIGINT)');
         $query = mysqli_query($con,'SELECT hostedEvent FROM credentials WHERE username="'.$_SESSION["username"].'"');
         while($result = mysqli_fetch_array($query)){
             $hostedEvent=json_decode($result['hostedEvent'],true);

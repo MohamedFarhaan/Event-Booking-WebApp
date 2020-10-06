@@ -11,10 +11,22 @@
             if(mysqli_connect_errno()){
                     echo "Failed to connect : " . mysqli_errno();
             }
-            $seatForUser[];$i=0;
+            $i=0;
         $query=mysqli_query($con,'SELECT * FROM event_dict WHERE eventname="'.$Eventname.'"');
         while($result = mysqli_fetch_array($query)){
-            while($i<)
+            $seating=json_decode($result["Seatings"],true);
+            $seatsSold = $result['seatsSold'] + $tcktCount;
+            while($i<$tcktCount ){
+               $SeatforUser[$i]=$seating[$i];
+                $i++;
+            }
+            $seating=array_splice($seating,$tcktCount);
+            $seating = json_encode($seating);
+            $SeatforUser = json_encode($SeatforUser);
+            $query = mysqli_query($con,'UPDATE event_dict SET Seatings=\''.$seating.'\', seatsSold='.$seatsSold.' WHERE eventname="'.$Eventname.'" ');
+            $query = mysqli_query($con, 'INSERT INTO '.$Eventname.' VALUES("'.$_SESSION["username"].'",\''.$SeatforUser.'\',"'.$_SESSION["contact_mail"].'",'.$_SESSION["phn_no"].')');
+            mysqli_close($con);
+            header("location:index.php");
         }
     }
     if(!isset($_SESSION['username']))
